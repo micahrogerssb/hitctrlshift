@@ -1,0 +1,26 @@
+---
+import GlowingBorder from '../../ui/GlowingBorder.astro';
+import GridPattern from '../../ui/GridPattern.astro';
+
+---
+
+<div class="relative bg-black/30 backdrop-blur-sm p-8 rounded-lg border border-purple-800/30">
+  <GlowingBorder />
+  <div class="absolute inset-0 rounded-lg overflow-hidden">
+    <GridPattern />
+  </div>
+  <div class="relative">
+    <h1 class="text-4xl font-sans font-black mb-8 text-white/90">Equity by 21st Century Means</h1>
+    <div class="prose prose-invert">
+      <p class="text-lg leading-relaxed text-gray-300 mb-6">
+        At CtrlShift, we believe that the power to shape our world should rest in the hands of the many, not the few. Our mission is to spotlight the stories, challenges, and triumphs of everyday working people across America—stories that often go untold by traditional media.
+      </p>
+      <p class="text-lg leading-relaxed text-gray-300 mb-6">
+        We're not about labels or tired political jargon. Instead, CtrlShift is about a shared vision of fairness, accountability, and opportunity for all.
+      </p>
+      <p class="text-lg leading-relaxed text-gray-300">
+        Through digital media, CtrlShift is building a space where working people can find information, perspective, and hope.
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  author: string;
+  content: string;
+  date: Date;
+}
+
+const { title, author, content, date } = Astro.props;
+---
+
+<div class="relative bg-black/30 backdrop-blur-sm p-8 rounded-lg border border-purple-800/30">
+  <div class="relative">
+    <h2 class="text-2xl font-sans font-black mb-2 text-white/90">{title}</h2>
+    <p class="text-sm text-punk-red/80 mb-4">by {author}</p>
+    <div class="prose prose-invert">
+      <pre class="whitespace-pre-wrap font-sans text-lg leading-relaxed text-gray-300">{content}</pre>
+    </div>
+    <div class="mt-4 text-right">
+      <time datetime={date.toISOString()} class="text-sm text-gray-500">
+        {date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+      </time>
+    </div>
+  </div>
+</div>

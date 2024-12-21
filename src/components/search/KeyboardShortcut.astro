@@ -1,0 +1,18 @@
+---
+interface Props {
+  keys: string[];
+}
+
+const { keys } = Astro.props;
+---
+
+<div class="hidden sm:flex items-center gap-1">
+  {keys.map((key, index) => (
+    <>
+      <kbd class="px-1.5 py-0.5 text-xs font-mono text-white/40 bg-white/5 rounded border border-white/10">
+        {key}
+      </kbd>
+      {index < keys.length - 1 && <span class="text-white/20">+</span>}
+    </>
+  ))}
+</div>

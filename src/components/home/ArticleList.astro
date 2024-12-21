@@ -1,0 +1,72 @@
+---
+import ArticleCard from './ArticleCard.astro';
+import type { Article } from '../../types';
+import FadeInScale from '../animations/FadeInScale.astro';
+
+interface Props {
+  articles: Article[];
+}
+
+const { articles } = Astro.props;
+
+// Sort articles by date
+const sortedArticles = [...articles].sort((a, b) => 
+  new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+---
+
+<section 
+  class="max-w-6xl mx-auto px-4 opacity-0 translate-y-8 transition-all duration-1000"
+  data-articles-container
+>
+  <div class="border-t border-transparent relative pt-16">
+    {/* Gradient bar */}
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-secondary via-white/10 to-primary"></div>
+    
+    <div class="opacity-0 translate-y-4 transition-all duration-500" data-heading>
+      <h2 class="text-2xl font-sans font-black mb-12 text-white/90">Latest Articles</h2>
+    </div>
+    <div class="grid gap-16">
+      {sortedArticles.map((article, index) => (
+        <div 
+          class="opacity-0 translate-y-4 transition-all duration-500"
+          style={`--delay: ${index * 150}ms`}
+          data-article
+        >
+          <ArticleCard {...article} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const articlesContainer = document.querySelector('[data-articles-container]');
+  const heading = document.querySelector('[data-heading]');
+  const articles = document.querySelectorAll('[data-article]');
+
+  function showArticles() {
+    if (!articlesContainer || !heading) return;
+    
+    // Show container first
+    articlesContainer.classList.remove('opacity-0', 'translate-y-8');
+
+    // Show heading and first article together after a short delay
+    setTimeout(() => {
+      heading.classList.remove('opacity-0', 'translate-y-4');
+      
+      // Animate articles with staggered delay
+      articles.forEach(article => {
+        const delay = article.getAttribute('style')?.match(/--delay:\s*(\d+)ms/)?.[1];
+        setTimeout(() => {
+          article.classList.remove('opacity-0', 'translate-y-4');
+        }, parseInt(delay || '0'));
+      });
+    }, 200);
+  }
+
+  // Start animation sequence when hero animation completes
+  window.addEventListener('hero-animation-complete', () => {
+    setTimeout(showArticles, 300);
+  });
+</script>

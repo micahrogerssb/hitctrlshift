@@ -1,0 +1,16 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { articleContent } from '../../data/articleContent';
+
+const publishDate = new Date('2024-12-02');
+const slug = 'on-moving-on';
+---
+
+<ArticleLayout
+  title="On Moving On"
+  author="SuperNotNitin"
+  date={publishDate}
+  imageUrl="https://fortune.com/img-assets/wp-content/uploads/2024/08/GettyImages-633679096-e1724163405950.jpg?w=1440&q=75"
+  content={articleContent[slug]}
+  slug={slug}
+/>

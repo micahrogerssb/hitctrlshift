@@ -1,0 +1,9 @@
+---
+interface Props {
+  opacity?: string;
+  className?: string;
+}
+
+const { opacity = "0", className = "" } = Astro.props;
+---
+<div class={`absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-${opacity} transition-opacity duration-500 rounded-lg ${className}`}></div>

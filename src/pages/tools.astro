@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageSpacer from '../components/ui/PageSpacer.astro';
+import ArticleHeaderLogo from '../components/ArticleHeaderLogo.astro';
+import ToolCard from '../components/tools/ToolCard.astro';
+import { toolCategories } from '../data/tools/categories';
+---
+
+<Layout title="Tools">
+  <PageSpacer />
+  <div class="max-w-4xl mx-auto px-4">
+    <ArticleHeaderLogo />
+    
+    <div class="space-y-16">
+      {toolCategories.map((category) => (
+        <section>
+          <h2 class:list={[
+            "font-sans font-black mb-6",
+            category.name === "CtrlShift Tools" 
+              ? "text-3xl text-white/90" 
+              : "text-2xl text-white/80"
+          ]}>
+            {category.name}
+          </h2>
+          <div class="grid gap-6 sm:grid-cols-2">
+            {category.tools.map(tool => (
+              <ToolCard {...tool} />
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</Layout>

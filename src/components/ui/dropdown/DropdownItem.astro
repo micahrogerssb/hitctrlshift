@@ -1,0 +1,27 @@
+---
+interface Props {
+  href: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const { href, icon, title, description } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="block px-4 py-3 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all duration-300"
+>
+  <div class="flex items-start gap-3">
+    <div class="flex-shrink-0 w-5 h-5 mt-0.5 text-white/50">
+      <Fragment set:html={icon} />
+    </div>
+    <div>
+      <div class="font-sans font-black text-sm">{title}</div>
+      <div class="text-xs text-white/50 mt-0.5 line-clamp-2">{description}</div>
+    </div>
+  </div>
+</a>

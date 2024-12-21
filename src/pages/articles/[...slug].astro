@@ -1,0 +1,70 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { format } from 'date-fns';
+import PageSpacer from '../../components/ui/PageSpacer.astro';
+import DiscordCTA from '../../components/ui/DiscordCTA.astro';
+import Comments from '../../components/Comments.astro';
+
+export async function getStaticPaths() {
+  const articles = [
+    {
+      slug: "on-moving-on",
+      title: "On Moving On",
+      author: "SuperNotNitin",
+      date: new Date('2024-11-30'),
+      imageUrl: "https://fortune.com/img-assets/wp-content/uploads/2024/08/GettyImages-633679096-e1724163405950.jpg?w=1440&q=75",
+      content: `<p>"Trump won Pennsylvania" shouted a man in constant fervor since the morning...</p>`
+    },
+    {
+      slug: "kamala-harris-democratic-party",
+      title: "Where Did We Go Wrong?",
+      author: "Micah",
+      date: new Date('2024-11-30'),
+      imageUrl: "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcReicSlNwYBj8PHVvXtJDHuuoGIwvua8TB7DTmG6hjYbiYk9nTgunny5xgp7zD6hZEU3kFImePtajHvUqA",
+      content: `<p>Back in 2020, there was a vision of the future...</p>`
+    },
+    {
+      slug: "data-is-the-new-capital",
+      title: "An Economic Analysis of Your Data",
+      author: "Justin",
+      date: new Date('2024-11-30'),
+      imageUrl: "https://cdn.britannica.com/06/117706-050-F15B3FAC/view-Three-Mile-Island-Pennsylvania-Harrisburg.jpg",
+      content: `<p>Technology has always been a transformative force, reshaping societies and economies...</p>`
+    }
+  ];
+
+  return articles.map(article => ({
+    params: { slug: article.slug },
+    props: { article }
+  }));
+}
+
+const { article } = Astro.props;
+---
+
+<Layout title={article.title} fullWidth>
+  <PageSpacer />
+  <article class="max-w-[90ch] mx-auto prose prose-invert sm:bg-black/30 sm:backdrop-blur-sm sm:p-8 sm:rounded-lg sm:border sm:border-purple-800/30 px-4 sm:px-8">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold mb-4">{article.title}</h1>
+      <div class="flex justify-between items-center font-mono text-sm text-gray-400 mb-6">
+        <span>by {article.author}</span>
+        <time datetime={article.date.toISOString()}>
+          {format(article.date, 'MMMM d, yyyy')}
+        </time>
+      </div>
+      <img 
+        src={article.imageUrl}
+        alt={article.title}
+        class="w-full h-[50vh] object-cover sm:rounded-lg mb-8"
+      />
+    </header>
+
+    <div class="space-y-6 text-lg" set:html={article.content}>
+    </div>
+    <DiscordCTA />
+    <div class="mt-12">
+      <Comments />
+    </div>
+  </article>
+</Layout>

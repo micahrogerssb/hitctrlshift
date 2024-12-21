@@ -1,0 +1,123 @@
+---
+---
+<div class="flex items-center gap-3">
+  <button
+    id="mute-button"
+    class="w-8 h-8 flex items-center justify-center text-white/70 hover:text-white/90 transition-colors duration-300"
+    aria-label="Mute"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M11 5L6 9H2v6h4l5 4zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    </svg>
+  </button>
+  
+  <input
+    type="range"
+    id="volume-slider"
+    min="0"
+    max="100"
+    value="100"
+    class="w-24 accent-primary"
+  />
+</div>
+
+<script>
+  import { AudioManager } from './audio/AudioManager';
+
+  class VolumeController {
+    private muteButton: HTMLButtonElement | null;
+    private volumeSlider: HTMLInputElement | null;
+    private audioManager: AudioManager;
+
+    constructor() {
+      this.muteButton = document.getElementById('mute-button') as HTMLButtonElement;
+      this.volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
+      this.audioManager = AudioManager.getInstance();
+
+      this.init();
+    }
+
+    private init() {
+      if (!this.volumeSlider || !this.muteButton) return;
+
+      // Handle volume changes
+      this.volumeSlider.addEventListener('input', () => {
+        const volume = parseInt(this.volumeSlider?.value || '100') / 100;
+        this.audioManager.setVolume(volume);
+      });
+
+      // Handle mute toggle
+      this.muteButton.addEventListener('click', () => {
+        this.audioManager.toggleMute();
+      });
+
+      // Subscribe to audio state changes
+      this.audioManager.subscribe(({ volume, isMuted }) => {
+        this.updateUI(volume, isMuted);
+      });
+    }
+
+    private updateUI(volume: number, isMuted: boolean) {
+      if (!this.volumeSlider || !this.muteButton) return;
+
+      // Update slider value
+      this.volumeSlider.value = String(Math.round(volume * 100));
+      
+      // Update mute button
+      this.muteButton.classList.toggle('text-primary/70', isMuted);
+      
+      // Update mute icon
+      this.muteButton.innerHTML = isMuted ? 
+        `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 5L6 9H2v6h4l5 4zM23 9l-6 6M17 9l6 6"/>
+        </svg>` :
+        `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 5L6 9H2v6h4l5 4zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>`;
+    }
+  }
+
+  // Initialize controller
+  new VolumeController();
+</script>
+
+<style>
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ED1C24;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+
+  /* Firefox styles */
+  input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: #ED1C24;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.2);
+  }
+</style>

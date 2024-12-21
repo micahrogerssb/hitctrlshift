@@ -1,0 +1,56 @@
+---
+import { AssetManager } from '../utils/lazyLoading';
+
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  eager?: boolean;
+}
+
+const { src, alt, class: className, eager = false } = Astro.props;
+
+// Detect if we're on mobile
+const isMobile = Astro.request.headers.get('user-agent')?.match(
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+);
+---
+
+<img
+  src={eager ? src : undefined}
+  data-src={!eager ? src : undefined}
+  alt={alt}
+  class:list={[
+    className,
+    'transition-opacity duration-300',
+    !eager && 'opacity-0'
+  ]}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding="async"
+/>
+
+{!eager && (
+  <script>
+    // Initialize AssetManager
+    import { AssetManager } from '../utils/lazyLoading';
+    AssetManager.init();
+
+    // Handle all images with data-src
+    document.querySelectorAll('img[data-src]').forEach(img => {
+      if (img instanceof HTMLImageElement) {
+        // Show image when loaded
+        img.onload = () => img.classList.remove('opacity-0');
+        
+        // Start observing
+        AssetManager.observe(img);
+      }
+    });
+  </script>
+)}
+
+<style>
+  img {
+    will-change: opacity;
+    transform: translateZ(0);
+  }
+</style>

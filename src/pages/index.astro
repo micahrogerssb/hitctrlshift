@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import ArticleList from '../components/home/ArticleList.astro';
+import BottomSpacer from '../components/ui/BottomSpacer.astro';
+import HomeToolsButton from '../components/ui/buttons/HomeToolsButton.astro';
+import HomeLiveButton from '../components/ui/buttons/HomeLiveButton.astro';
+import InstagramButton from '../components/ui/buttons/InstagramButton.astro';
+import TikTokButton from '../components/ui/buttons/TikTokButton.astro';
+import YouTubeButton from '../components/ui/buttons/YouTubeButton.astro';
+import XButton from '../components/ui/buttons/XButton.astro';
+import SocialButton from '../components/ui/buttons/SocialButton.astro';
+import ButtonGroup from '../components/ui/buttons/ButtonGroup.astro';
+import FadeInScale from '../components/animations/FadeInScale.astro';
+import MissionStatement from '../components/home/MissionStatement.astro';
+import { articles } from '../data/articles';
+
+const substackIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white">
+  <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
+</svg>`;
+---
+
+<Layout title="CtrlShift - Join the Shift" isHomePage={true}>
+  <div class="space-y-24">
+    <div class="space-y-12">
+      <HomeHero />
+      <FadeInScale delay={1000} duration={2000}>
+        <ButtonGroup>
+          <div slot="main" class="flex flex-row gap-6">
+            <HomeToolsButton />
+            <HomeLiveButton />
+          </div>
+          <div slot="social-row-1" class="flex flex-row gap-4">
+            <InstagramButton />
+            <TikTokButton />
+            <SocialButton 
+              href="https://substack.com/@hitctrlshift"
+              icon={substackIcon}
+              color="#FF6719"
+            />
+          </div>
+          <div slot="social-row-2" class="flex flex-row gap-4">
+            <YouTubeButton />
+            <XButton />
+            <div class="w-8"></div>
+          </div>
+        </ButtonGroup>
+      </FadeInScale>
+      <MissionStatement />
+    </div>
+    <ArticleList articles={articles} />
+    <BottomSpacer />
+  </div>
+</Layout>

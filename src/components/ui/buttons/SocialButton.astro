@@ -1,0 +1,26 @@
+---
+interface Props {
+  href: string;
+  icon: string;
+  color: string;
+  class?: string;
+}
+
+const { href, icon, color, class: className = "" } = Astro.props;
+---
+
+<a 
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[
+    "w-8 h-8 flex items-center justify-center",
+    `bg-[${color}] hover:bg-[${color}]/90`,
+    "rounded-lg border",
+    "transition-all duration-300 hover:-translate-y-0.5 hover:scale-110",
+    className
+  ]}
+  style={`border-color: ${color}`}
+>
+  <Fragment set:html={icon} />
+</a>

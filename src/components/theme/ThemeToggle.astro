@@ -1,0 +1,32 @@
+---
+import ThemeIcon from './ThemeIcon.astro';
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  class="relative inline-flex h-8 w-14 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+  aria-label="Toggle theme"
+>
+  <span class="sr-only">Toggle theme</span>
+  <span
+    class="pointer-events-none absolute mx-1 h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition-transform duration-200 ease-in-out"
+  >
+    <span class="absolute inset-0 flex items-center justify-center transition-opacity">
+      <ThemeIcon type="sun" />
+      <ThemeIcon type="moon" />
+    </span>
+  </span>
+</button>
+
+<style>
+  /* Light mode */
+  #theme-toggle span:first-of-type {
+    transform: translateX(0);
+  }
+  
+  /* Dark mode */
+  :global(.dark) #theme-toggle span:first-of-type {
+    transform: translateX(1.5rem);
+  }
+</style>

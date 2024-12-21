@@ -1,0 +1,16 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { articleContent } from '../../data/articleContent';
+
+const publishDate = new Date('2024-12-09');
+const slug = 'organizing-at-american-university';
+---
+
+<ArticleLayout
+  title="Organizing at American University Needs to Change"
+  author="SuperNotNitin"
+  date={publishDate}
+  imageUrl="https://snworksceo.imgix.net/ame-egl/e5d5db48-5a0a-4774-94e3-b883dbcef142.sized-1000x1000.jpeg?w=1000"
+  content={articleContent[slug]}
+  slug={slug}
+/>

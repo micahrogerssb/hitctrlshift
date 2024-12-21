@@ -1,0 +1,14 @@
+---
+import SocialLinks from './ui/SocialLinks.astro';
+---
+
+<footer class="border-t border-transparent relative mt-auto">
+  {/* Gradient border */}
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-secondary via-white/10 to-primary"></div>
+  
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col items-center gap-6">
+      <SocialLinks />
+    </div>
+  </div>
+</footer>

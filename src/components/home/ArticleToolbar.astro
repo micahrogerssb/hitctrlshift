@@ -1,0 +1,64 @@
+---
+import { articles } from '../../data/articles';
+import { getAllCategories } from '../../utils/articles';
+import CategoryButton from '../ui/CategoryButton.astro';
+import SortButton from '../ui/SortButton.astro';
+import type { SortOption } from '../../types';
+
+const categories = getAllCategories(articles);
+const totalArticles = articles.length;
+---
+
+<!-- Template remains the same -->
+
+<script>
+  import { filterAndSortArticles, getArticleCategory } from '../../utils/articles';
+  import type { Article, FilterState } from '../../types';
+
+  // Get articles from the data attribute and parse dates
+  const articleElements = document.querySelectorAll('[data-article]');
+  const articles = Array.from(articleElements).map(el => {
+    const articleData = el.getAttribute('data-article');
+    if (!articleData) return null;
+    const parsed = JSON.parse(articleData);
+    return {
+      ...parsed,
+      date: new Date(parsed.date) // Convert ISO string back to Date object
+    };
+  }).filter(Boolean) as Article[];
+
+  let state: FilterState = {
+    categories: [],
+    sortBy: 'newest'
+  };
+
+  function updateArticles() {
+    const filtered = filterAndSortArticles(articles, state.categories, state.sortBy);
+    
+    // Update article count
+    const countElement = document.getElementById('article-count');
+    if (countElement) {
+      countElement.textContent = filtered.length.toString();
+    }
+
+    // Update article visibility and order
+    const container = articleElements[0]?.parentElement;
+    if (!container) return;
+
+    // Remove all articles
+    articleElements.forEach(el => el.remove());
+
+    // Add them back in the correct order
+    filtered.forEach(article => {
+      const el = Array.from(articleElements).find(el => {
+        const data = JSON.parse(el.getAttribute('data-article') || '{}');
+        return data.slug === article.slug;
+      });
+      if (el) {
+        container.appendChild(el);
+      }
+    });
+  }
+
+  // Rest of the script remains the same
+</script>

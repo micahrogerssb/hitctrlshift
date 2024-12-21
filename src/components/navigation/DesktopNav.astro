@@ -1,0 +1,20 @@
+---
+import NavLink from './NavLink.astro';
+import { navItems } from '../../data/navigation';
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="hidden sm:block">
+  <ul class="flex items-center gap-2">
+    {navItems.map(item => (
+      <li>
+        <NavLink 
+          href={item.href}
+          label={item.label}
+          isActive={currentPath === item.href}
+        />
+      </li>
+    ))}
+  </ul>
+</nav>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  category: string;
+  isSelected: boolean;
+}
+
+const { category, isSelected } = Astro.props;
+---
+
+<button 
+  data-category={category}
+  class:list={[
+    "px-3 py-1.5 text-xs font-mono rounded-full border transition-all duration-300",
+    isSelected ? 
+      "text-white bg-white/20 border-white/30" :
+      "text-white/70 bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20"
+  ]}
+>
+  {category}
+</button>

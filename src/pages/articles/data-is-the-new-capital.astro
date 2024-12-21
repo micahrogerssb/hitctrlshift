@@ -1,0 +1,16 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { articleContent } from '../../data/articleContent';
+
+const publishDate = new Date('2024-11-29');
+const slug = 'data-is-the-new-capital';
+---
+
+<ArticleLayout
+  title="An Economic Analysis of Your Data"
+  author="Justin"
+  date={publishDate}
+  imageUrl="https://cdn.britannica.com/06/117706-050-F15B3FAC/view-Three-Mile-Island-Pennsylvania-Harrisburg.jpg"
+  content={articleContent[slug]}
+  slug={slug}
+/>

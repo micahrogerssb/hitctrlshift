@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageSpacer from '../../components/ui/PageSpacer.astro';
+import ArticleHeaderLogo from '../../components/ArticleHeaderLogo.astro';
+import LiveHeader from '../../components/live/LiveHeader.astro';
+import DemoIndicator from '../../components/live/DemoIndicator.astro';
+import RadioPlayer from '../../components/live/RadioPlayer/index.astro';
+---
+
+<Layout title="CtrlShift Live">
+  <PageSpacer />
+  <div class="max-w-4xl mx-auto px-4">
+    <ArticleHeaderLogo />
+    
+    <LiveHeader 
+      title="CtrlShift Live"
+      description="Experience our live radio stream featuring news, commentary, and music. Currently in demo mode using SomaFM's Groove Salad stream."
+    />
+
+    <DemoIndicator />
+    
+    <div class="max-w-md mx-auto">
+      <RadioPlayer />
+    </div>
+
+    <div class="mt-8 text-center">
+      <p class="text-white/60 text-sm">
+        Note: This is a demo using SomaFM's Groove Salad stream. Our own live radio feature is coming soon!
+      </p>
+    </div>
+  </div>
+</Layout>

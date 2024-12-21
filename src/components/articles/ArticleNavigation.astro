@@ -1,0 +1,68 @@
+---
+import type { Article } from '../../types';
+import { articles } from '../../data/articles';
+
+interface Props {
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+
+// Sort articles by date
+const sortedArticles = [...articles].sort((a, b) => 
+  new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+
+// Find current article index
+const currentIndex = sortedArticles.findIndex(article => article.slug === currentSlug);
+
+// Get previous and next articles
+const previousArticle = currentIndex < sortedArticles.length - 1 ? sortedArticles[currentIndex + 1] : null;
+const nextArticle = currentIndex > 0 ? sortedArticles[currentIndex - 1] : null;
+
+function truncateTitle(title: string, maxLength: number = 50): string {
+  return title.length > maxLength ? title.slice(0, maxLength) + '...' : title;
+}
+---
+
+<nav class="border-t border-white/10 mt-16 pt-8">
+  <div class="flex flex-col sm:flex-row justify-between gap-8">
+    {previousArticle && (
+      <a 
+        href={`/articles/${previousArticle.slug}`}
+        class="group flex-1"
+      >
+        <div class="flex flex-col">
+          <span class="text-sm font-mono text-white/40 mb-2 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Previous Article
+          </span>
+          <span class="font-sans font-black text-lg text-white/70 group-hover:text-primary transition-colors duration-300">
+            {truncateTitle(previousArticle.title)}
+          </span>
+        </div>
+      </a>
+    )}
+
+    {nextArticle && (
+      <a 
+        href={`/articles/${nextArticle.slug}`}
+        class="group flex-1 text-right"
+      >
+        <div class="flex flex-col">
+          <span class="text-sm font-mono text-white/40 mb-2 flex items-center gap-2 justify-end">
+            Next Article
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </span>
+          <span class="font-sans font-black text-lg text-white/70 group-hover:text-primary transition-colors duration-300">
+            {truncateTitle(nextArticle.title)}
+          </span>
+        </div>
+      </a>
+    )}
+  </div>
+</nav>

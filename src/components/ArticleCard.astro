@@ -1,0 +1,55 @@
+---
+import { format } from 'date-fns';
+import { calculateReadingTime } from '../utils/readingTime';
+
+interface Props {
+  title: string;
+  excerpt: string;
+  author: string;
+  date: Date;
+  slug: string;
+  imageUrl?: string;
+  content?: string;
+}
+
+const { title, excerpt, author, date, slug, imageUrl, content } = Astro.props;
+
+function getPreview(text: string) {
+  const plainText = text?.replace(/<[^>]*>/g, '') || excerpt;
+  const words = plainText.split(' ').slice(0, 25);
+  return words.join(' ') + '...';
+}
+
+const readingTime = content ? calculateReadingTime(content) : '3 min read';
+---
+
+<article class="group relative backdrop-blur-sm py-6 transition-all duration-500">
+  <a href={`/articles/${slug}`} class="relative block group/link">
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="flex-1 order-2 md:order-1 flex flex-col">
+        <div class="flex-grow">
+          <h2 class="text-3xl font-sans font-black tracking-tight text-white/90 group-hover/link:text-primary transition-colors duration-300 mb-4 leading-tight max-w-2xl">{title}</h2>
+          <p class="text-gray-400 mb-6 font-light font-serif text-xl leading-relaxed max-w-2xl">{getPreview(content || '')}</p>
+        </div>
+        <div class="flex justify-between items-center pt-4 border-t border-white/10">
+          <div class="flex items-center gap-4">
+            <span class="font-sans text-sm font-semibold uppercase tracking-wider text-white/70">{author}</span>
+            <span class="text-sm text-gray-500">{readingTime}</span>
+          </div>
+          <time datetime={date.toISOString()} class="font-mono text-sm text-gray-500">
+            {format(date, 'MMMM d, yyyy')}
+          </time>
+        </div>
+      </div>
+      {imageUrl && (
+        <div class="w-full md:w-[480px] h-64 md:h-72 flex-shrink-0 order-1 md:order-2">
+          <img 
+            src={imageUrl} 
+            alt={title}
+            class="w-full h-full object-cover opacity-80 group-hover/link:opacity-100 transition-opacity duration-300 rounded-lg"
+          />
+        </div>
+      )}
+    </div>
+  </a>
+</article>

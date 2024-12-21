@@ -1,0 +1,43 @@
+---
+interface Props {
+  delay?: number;
+  duration?: number;
+  class?: string;
+}
+
+const { 
+  delay = 0,
+  duration = 1000,
+  class: className = "" 
+} = Astro.props;
+---
+
+<div 
+  class:list={[
+    "opacity-0 transition-all ease-out",
+    className
+  ]}
+  style={`--animation-delay: ${delay}ms; --animation-duration: ${duration}ms;`}
+  data-fade-in-scale
+>
+  <slot />
+</div>
+
+<style>
+  [data-fade-in-scale] {
+    will-change: opacity, transform;
+    animation: fade-in-scale var(--animation-duration) ease-out forwards;
+    animation-delay: var(--animation-delay);
+  }
+
+  @keyframes fade-in-scale {
+    0% {
+      opacity: 0;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>

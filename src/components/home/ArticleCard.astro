@@ -1,0 +1,60 @@
+---
+import { format } from 'date-fns';
+import { calculateReadingTime } from '../../utils/readingTime';
+
+interface Props {
+  title: string;
+  excerpt: string;
+  author: string;
+  date: Date;
+  slug: string;
+  imageUrl?: string;
+  content?: string;
+}
+
+const { title, excerpt, author, date, slug, imageUrl, content } = Astro.props;
+
+function getPreview(text: string) {
+  const plainText = text?.replace(/<[^>]*>/g, '') || excerpt;
+  const words = plainText.split(' ').slice(0, 25);
+  return words.join(' ') + '...';
+}
+
+const readingTime = content ? calculateReadingTime(content) : '3 min read';
+---
+
+<article class="group">
+  <a href={`/articles/${slug}`} class="block">
+    <div class="grid md:grid-cols-5 gap-8 items-center">
+      {imageUrl && (
+        <div class="md:col-span-2 lg:col-span-1">
+          <div class="relative aspect-[4/3] overflow-hidden rounded-lg">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <img 
+              src={imageUrl} 
+              alt={title}
+              class="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      )}
+      <div class="md:col-span-3 lg:col-span-4 space-y-4">
+        <h2 class="text-2xl font-sans font-black tracking-tight text-white/90 group-hover:text-primary transition-colors duration-300">
+          {title}
+        </h2>
+        <p class="text-base text-gray-400 leading-relaxed line-clamp-2">
+          {getPreview(content || '')}
+        </p>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+          <span class="font-medium text-secondary/90">{author}</span>
+          <span class="text-gray-500">{readingTime}</span>
+          <time datetime={date.toISOString()} class="text-gray-500">
+            {format(date, 'MMMM d, yyyy')}
+          </time>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>

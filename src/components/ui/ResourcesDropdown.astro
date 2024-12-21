@@ -1,0 +1,93 @@
+---
+const resources = [
+  {
+    name: 'Podcasts',
+    href: 'https://abolitionnotes.org/leftist-podcasts',
+    description: 'A curated list of leftist podcasts'
+  },
+  {
+    name: 'Reading',
+    href: 'https://abolitionnotes.org/books',
+    description: 'Essential books and articles'
+  }
+];
+---
+
+<div class="relative">
+  <button
+    id="resources-button"
+    class="p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all duration-300 group flex items-center gap-2"
+    aria-expanded="false"
+    aria-haspopup="true"
+  >
+    Resources
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="16" 
+      height="16" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      stroke-width="2" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"
+      class="transition-transform duration-300"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <div
+    id="resources-dropdown"
+    class="fixed right-4 mt-2 w-60 rounded-lg bg-black/90 backdrop-blur-xl border border-white/10 shadow-2xl transform scale-95 opacity-0 pointer-events-none transition-all duration-300 z-[200]"
+    style="top: 3rem;"
+  >
+    <div class="p-2">
+      {resources.map(resource => (
+        <a
+          href={resource.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors duration-300"
+        >
+          <div class="font-sans font-black">{resource.name}</div>
+          <div class="text-xs text-white/50 mt-0.5">{resource.description}</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const button = document.getElementById('resources-button');
+  const dropdown = document.getElementById('resources-dropdown');
+  let isOpen = false;
+
+  function toggleDropdown(open: boolean) {
+    isOpen = open;
+    button?.setAttribute('aria-expanded', String(open));
+    if (open) {
+      dropdown?.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+      button?.querySelector('svg')?.classList.add('rotate-180');
+    } else {
+      dropdown?.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+      button?.querySelector('svg')?.classList.remove('rotate-180');
+    }
+  }
+
+  button?.addEventListener('click', () => {
+    toggleDropdown(!isOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!button?.contains(e.target as Node)) {
+      toggleDropdown(false);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      toggleDropdown(false);
+    }
+  });
+</script>

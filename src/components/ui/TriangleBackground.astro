@@ -1,0 +1,44 @@
+---
+---
+<div class="glow-container">
+  <div class="glow glow-left"></div>
+  <div class="glow glow-right"></div>
+</div>
+
+<style>
+  .glow-container {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .glow {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.15;
+    filter: blur(100px);
+  }
+
+  .glow-left {
+    left: -50vw;
+    background: radial-gradient(
+      circle at right,
+      #FF2D4C 0%,
+      rgba(255, 45, 76, 0.3) 30%,
+      transparent 70%
+    );
+  }
+
+  .glow-right {
+    right: -50vw;
+    background: radial-gradient(
+      circle at left,
+      #45D3FF 0%,
+      rgba(69, 211, 255, 0.3) 30%,
+      transparent 70%
+    );
+  }
+</style>

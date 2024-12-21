@@ -1,0 +1,21 @@
+---
+const isMobile = Astro.request.headers.get('user-agent')?.match(
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+);
+---
+<div class="fixed inset-0 min-h-screen bg-gradient-to-b from-[#0a0a0a] to-[#12121f] transition-colors duration-500 -z-50">
+  {!isMobile && (
+    <>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,45,76,0.06)_0%,transparent_100%)]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(55,198,244,0.05)_0%,transparent_100%)]"></div>
+      <div class="absolute inset-0" style="background: repeating-linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 100px), repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 100px);"></div>
+    </>
+  )}
+</div>
+
+<style>
+  .fixed {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+</style>

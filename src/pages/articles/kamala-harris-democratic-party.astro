@@ -1,0 +1,16 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { articleContent } from '../../data/articleContent';
+
+const publishDate = new Date('2024-12-05');
+const slug = 'kamala-harris-democratic-party';
+---
+
+<ArticleLayout
+  title="Where Did We Go Wrong?"
+  author="Micah"
+  date={publishDate}
+  imageUrl="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcReicSlNwYBj8PHVvXtJDHuuoGIwvua8TB7DTmG6hjYbiYk9nTgunny5xgp7zD6hZEU3kFImePtajHvUqA"
+  content={articleContent[slug]}
+  slug={slug}
+/>

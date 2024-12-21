@@ -1,0 +1,23 @@
+---
+import ArticleCard from '../../ArticleCard.astro';
+import type { Article } from '../../../types';
+import FadeInScale from '../../animations/FadeInScale.astro';
+
+interface Props {
+  articles: Article[];
+}
+
+const { articles } = Astro.props;
+---
+
+<section class="max-w-7xl mx-auto px-4">
+  <FadeInScale delay={300} duration={1000}>
+    <div class="space-y-16">
+      {articles.map((article, index) => (
+        <FadeInScale delay={400 + (index * 100)} duration={1000}>
+          <ArticleCard {...article} />
+        </FadeInScale>
+      ))}
+    </div>
+  </FadeInScale>
+</section>

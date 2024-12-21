@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GlowingBorder from '../../components/ui/GlowingBorder.astro';
+import GridPattern from '../../components/ui/GridPattern.astro';
+import PageSpacer from '../../components/ui/PageSpacer.astro';
+import ArticleHeaderLogo from '../../components/ArticleHeaderLogo.astro';
+---
+
+<Layout title="Art">
+  <PageSpacer />
+  <div class="max-w-3xl mx-auto">
+    <ArticleHeaderLogo />
+    <h1 class="text-4xl font-sans font-black mb-8 text-white/90">Art</h1>
+    <div class="relative bg-black/30 backdrop-blur-sm p-8 rounded-lg border border-purple-800/30">
+      <GlowingBorder />
+      <div class="absolute inset-0 rounded-lg overflow-hidden">
+        <GridPattern />
+      </div>
+      <div class="relative">
+        <p class="text-lg leading-relaxed text-gray-300 mb-6">
+          Explore our collection of revolutionary art and poetry, created by members of our community.
+        </p>
+        <a 
+          href="/poems"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-black/50 backdrop-blur-sm border border-punk-red/50 rounded font-mono text-sm text-white/90 transition-all duration-300 hover:border-punk-red hover:text-white hover:-translate-y-0.5"
+        >
+          <div class="w-1.5 h-1.5 bg-punk-red/50 rounded-full"></div>
+          Poetry
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

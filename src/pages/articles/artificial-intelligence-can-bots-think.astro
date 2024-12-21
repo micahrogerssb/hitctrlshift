@@ -1,0 +1,16 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { articleContent } from '../../data/articleContent';
+
+const publishDate = new Date('2024-12-14');
+const slug = 'artificial-intelligence-can-bots-think';
+---
+
+<ArticleLayout
+  title="Artificial Intelligence: Can the Bots Think?"
+  author="Micah"
+  date={publishDate}
+  imageUrl="https://elm.umaryland.edu/elm-stories/2023/ArtIntell.jpg"
+  content={articleContent[slug]}
+  slug={slug}
+/>

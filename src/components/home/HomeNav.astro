@@ -1,0 +1,24 @@
+---
+import MobileNav from '../navigation/MobileNav.astro';
+import DesktopNav from '../navigation/DesktopNav.astro';
+---
+
+<div class="sticky top-0 z-50 bg-black/80 backdrop-blur-lg border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="h-14 flex items-center justify-between">
+      <MobileNav />
+      <DesktopNav />
+      
+      <div class="flex items-center">
+        <a 
+          href="https://gofund.me/7787c0df"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-white/90 hover:text-white transition-colors duration-300"
+        >
+          Support Us
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

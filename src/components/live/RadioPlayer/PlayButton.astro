@@ -1,0 +1,70 @@
+---
+---
+<button
+  id="play-button"
+  class="w-16 h-16 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center transition-all duration-300 hover:bg-primary/30 hover:border-primary/40 hover:scale-105"
+  aria-label="Play/Pause"
+>
+  <div id="play-icon" class="w-6 h-6 text-white/90">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </div>
+  <div id="pause-icon" class="hidden w-6 h-6 text-white/90">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+    </svg>
+  </div>
+</button>
+
+<script>
+  import { AudioManager } from './audio/AudioManager';
+
+  class PlayButtonController {
+    private button: HTMLButtonElement | null;
+    private playIcon: HTMLElement | null;
+    private pauseIcon: HTMLElement | null;
+    private audioManager: AudioManager;
+
+    constructor() {
+      this.button = document.getElementById('play-button') as HTMLButtonElement;
+      this.playIcon = document.getElementById('play-icon');
+      this.pauseIcon = document.getElementById('pause-icon');
+      this.audioManager = AudioManager.getInstance();
+
+      this.init();
+    }
+
+    private init() {
+      if (!this.button) return;
+
+      // Handle click
+      this.button.addEventListener('click', () => {
+        const { isPlaying } = this.audioManager.getState();
+        if (isPlaying) {
+          this.audioManager.pause();
+        } else {
+          this.audioManager.play();
+        }
+      });
+
+      // Subscribe to audio state changes
+      this.audioManager.subscribe(({ isPlaying }) => {
+        this.updateUI(isPlaying);
+      });
+    }
+
+    private updateUI(isPlaying: boolean) {
+      if (isPlaying) {
+        this.playIcon?.classList.add('hidden');
+        this.pauseIcon?.classList.remove('hidden');
+      } else {
+        this.playIcon?.classList.remove('hidden');
+        this.pauseIcon?.classList.add('hidden');
+      }
+    }
+  }
+
+  // Initialize controller
+  new PlayButtonController();
+</script>

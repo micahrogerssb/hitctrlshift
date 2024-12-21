@@ -1,0 +1,28 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<div class="relative">
+  <ThemeToggle />
+</div>
+
+<script>
+  import { themeStore } from '../../utils/theme/store';
+  import { watchSystemTheme } from '../../utils/theme/system';
+
+  const toggle = document.getElementById('theme-toggle');
+  
+  if (toggle) {
+    // Handle click
+    toggle.addEventListener('click', () => {
+      themeStore.toggle();
+    });
+
+    // Watch for system theme changes
+    watchSystemTheme((theme) => {
+      if (!localStorage.getItem('theme')) {
+        themeStore.setTheme(theme);
+      }
+    });
+  }
+</script>

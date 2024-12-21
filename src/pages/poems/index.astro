@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageSpacer from '../../components/ui/PageSpacer.astro';
+import ArticleHeaderLogo from '../../components/ArticleHeaderLogo.astro';
+import PoemCard from '../../components/pages/poems/PoemCard.astro';
+import { poems } from '../../data/poems';
+---
+
+<Layout title="Poetry">
+  <PageSpacer />
+  <div class="max-w-3xl mx-auto">
+    <ArticleHeaderLogo />
+    <div class="flex items-center gap-4 mb-8">
+      <a 
+        href="/art"
+        class="font-mono text-sm text-white/70 hover:text-white transition-all duration-300 flex items-center gap-2"
+      >
+        <span class="text-punk-red">←</span> Back to Art
+      </a>
+    </div>
+    <h1 class="text-4xl font-sans font-black mb-8 text-white/90">Poetry</h1>
+    <div class="space-y-8">
+      {poems.map(poem => (
+        <PoemCard {...poem} />
+      ))}
+    </div>
+  </div>
+</Layout>

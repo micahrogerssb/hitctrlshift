@@ -1,0 +1,94 @@
+---
+import Layout from './Layout.astro';
+import { format } from 'date-fns';
+import Comments from '../components/Comments.astro';
+import ArticleHeaderLogo from '../components/ArticleHeaderLogo.astro';
+import ArticleNavigation from '../components/articles/ArticleNavigation.astro';
+
+interface Props {
+  title: string;
+  author: string;
+  date: Date;
+  imageUrl: string;
+  content: string;
+  slug: string;
+}
+
+const { title, author, date, imageUrl, content, slug } = Astro.props;
+
+// Detect mobile user agent
+const isMobile = Astro.request.headers.get('user-agent')?.match(
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+);
+---
+
+<Layout title={`CtrlShift - ${title}`} fullWidth>
+  <meta slot="head">
+    <meta property="og:title" content={`CtrlShift - ${title}`} />
+    <meta property="og:description" content={content.replace(/<[^>]*>/g, '').slice(0, 200) + '...'} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`CtrlShift - ${title}`} />
+    <meta name="twitter:description" content={content.replace(/<[^>]*>/g, '').slice(0, 200) + '...'} />
+    <meta name="twitter:image" content={imageUrl} />
+  </meta>
+  <div class="max-w-[100ch] mx-auto">
+    <div class="max-w-5xl mx-auto px-4">
+      <ArticleHeaderLogo />
+    </div>
+    <div class="h-px bg-white/10"></div>
+    <article class="py-8">
+      <div class="max-w-[90ch] mx-auto px-4 lg:px-8">
+        <header class="mb-8">
+          <h1 class="text-4xl font-sans font-black tracking-tight text-white/85 mb-4">{title}</h1>
+          <div class="flex justify-between items-center font-mono text-sm text-gray-400 mb-6">
+            <span>by {author}</span>
+            <time datetime={date.toISOString()}>
+              {format(date, 'MMMM d, yyyy')}
+            </time>
+          </div>
+          <img 
+            src={imageUrl}
+            alt={title}
+            class="w-full h-[50vh] object-cover mb-8"
+            loading="eager"
+            decoding="async"
+          />
+        </header>
+
+        <div class="prose prose-invert max-w-none mb-12" set:html={content}>
+        </div>
+        
+        <ArticleNavigation currentSlug={slug} />
+        
+        <div class="pt-8 border-t border-white/10 mt-16">
+          <Comments />
+        </div>
+      </div>
+    </article>
+  </div>
+
+  {isMobile && (
+    <style is:inline>
+      /* Optimize article scrolling on mobile */
+      article {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        transform: translateZ(0);
+      }
+
+      /* Prevent layout shifts */
+      img {
+        aspect-ratio: 16/9;
+        height: auto !important;
+      }
+
+      /* Optimize text rendering */
+      .prose {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+  )}
+</Layout>

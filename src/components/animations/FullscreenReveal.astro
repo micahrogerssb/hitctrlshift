@@ -1,0 +1,75 @@
+---
+interface Props {
+  initialDelay?: number;
+  duration?: number;
+}
+
+const { 
+  initialDelay = 0,
+  duration = 1500
+} = Astro.props;
+---
+
+<div 
+  class="relative transition-all ease-out"
+  data-fullscreen-reveal
+  style={`--initial-delay: ${initialDelay}ms; --animation-duration: ${duration}ms;`}
+>
+  <slot />
+</div>
+
+<script>
+  class FullscreenReveal {
+    private element: HTMLElement;
+    private isAnimating = false;
+
+    constructor(element: HTMLElement) {
+      this.element = element;
+      this.init();
+    }
+
+    private init() {
+      if (this.isAnimating) return;
+      this.isAnimating = true;
+
+      const initialDelay = parseInt(this.element.style.getPropertyValue('--initial-delay')) || 0;
+      const duration = parseInt(this.element.style.getPropertyValue('--animation-duration')) || 1500;
+
+      // Set initial state with transform
+      this.element.style.transform = 'translateX(0)';
+      this.element.style.minHeight = '100vh';
+      this.element.style.width = '100vw';
+
+      // Animate after initial delay
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          this.element.style.transform = 'translateX(0)';
+          this.element.style.minHeight = 'auto';
+          this.element.style.width = 'auto';
+          this.element.style.marginTop = '4rem';
+
+          // Dispatch event when animation completes
+          setTimeout(() => {
+            this.isAnimating = false;
+            window.dispatchEvent(new CustomEvent('hero-animation-complete'));
+          }, duration);
+        });
+      }, initialDelay);
+    }
+  }
+
+  // Initialize all instances
+  document.querySelectorAll('[data-fullscreen-reveal]').forEach(element => {
+    if (element instanceof HTMLElement) {
+      new FullscreenReveal(element);
+    }
+  });
+</script>
+
+<style>
+  [data-fullscreen-reveal] {
+    will-change: transform, min-height, width, margin;
+    transition: all var(--animation-duration) cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(0);
+  }
+</style>

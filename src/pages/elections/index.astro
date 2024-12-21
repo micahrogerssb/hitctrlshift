@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ElectionsHero from '../../components/pages/elections/ElectionsHero.astro';
+import ElectionsList from '../../components/pages/elections/ElectionsList.astro';
+import PageSpacer from '../../components/ui/PageSpacer.astro';
+import { articles } from '../../data/articles';
+
+const electionArticles = articles.filter(article => 
+  article.slug === 'on-moving-on' || 
+  article.slug === 'kamala-harris-democratic-party'
+);
+---
+
+<Layout title="Elections">
+  <PageSpacer />
+  <div class="space-y-24">
+    <ElectionsHero />
+    <ElectionsList articles={electionArticles} />
+  </div>
+</Layout>

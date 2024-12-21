@@ -1,0 +1,43 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'substack';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const { 
+  href,
+  variant = 'primary',
+  size = 'md',
+  class: className = "" 
+} = Astro.props;
+
+const variants = {
+  primary: 'bg-primary text-[#0a0a0a] hover:bg-primary/90 border-primary',
+  secondary: 'bg-secondary text-[#0a0a0a] hover:bg-secondary/90 border-secondary',
+  substack: 'bg-substack text-[#0a0a0a] hover:bg-substack/90 border-substack'
+};
+
+const sizes = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-5 py-2.5 text-base',
+  lg: 'px-6 py-3 text-lg'
+};
+---
+
+<a
+  href={href}
+  class:list={[
+    "group relative inline-flex items-center justify-center",
+    "backdrop-blur-sm border rounded-lg",
+    "font-sans font-bold tracking-wide",
+    "transition-all duration-300",
+    "hover:-translate-y-0.5",
+    variants[variant],
+    sizes[size],
+    className
+  ]}
+>
+  <slot />
+</a>

@@ -1,0 +1,22 @@
+---
+interface Props {
+  opacity?: string;
+  size?: string;
+  className?: string;
+}
+
+const { opacity = "10", size = "16px", className = "" } = Astro.props;
+---
+<div class={`w-full h-full opacity-${opacity} ${className}`}>
+  <div class="w-full h-full grid-lines"></div>
+</div>
+
+<style define:vars={{ size }}>
+  .grid-lines {
+    background-image: 
+      linear-gradient(to right, #ffffff03 1px, transparent 1px),
+      linear-gradient(to bottom, #ffffff03 1px, transparent 1px);
+    background-size: var(--size) var(--size);
+    mask-image: linear-gradient(to bottom, transparent, black 15%);
+  }
+</style>

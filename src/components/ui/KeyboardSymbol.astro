@@ -1,0 +1,68 @@
+---
+interface Props {
+  symbol: 'ctrl' | 'shift';
+}
+
+const { symbol } = Astro.props;
+
+const symbols = {
+  ctrl: '⌃',
+  shift: '⇧'
+};
+---
+<span class="font-mono text-punk-red/80">{symbols[symbol]}</span>
+</boltArtifact>
+
+Now I'll update the index page to use these symbols:
+
+<boltArtifact id="update-index" title="Update Index Page with Keyboard Symbols">
+<boltAction type="file" filePath="src/pages/index.astro">
+---
+import Layout from '../layouts/Layout.astro';
+import FeaturedPost from '../components/FeaturedPost.astro';
+import AnimatedHeading from '../components/AnimatedHeading.astro';
+import KeyboardSymbol from '../components/ui/KeyboardSymbol.astro';
+
+const featuredPosts = [
+  {
+    title: "On Moving On",
+    excerpt: "A reflection on hope, fear, and the power of collective action in the face of political upheaval.",
+    author: "SuperNotNitin",
+    date: new Date('2024-11-30'),
+    slug: "on-moving-on"
+  },
+  {
+    title: "Kamala Harris and the Democratic Party",
+    excerpt: "An analysis of the Democratic Party's shift away from progressive politics and the implications for the American left.",
+    author: "Micah Rogers",
+    date: new Date('2024-11-30'),
+    slug: "kamala-harris-democratic-party"
+  },
+  {
+    title: "Data is the New Capital",
+    excerpt: "An exploration of how data has become the primary source of wealth in the digital age.",
+    author: "Justin",
+    date: new Date('2024-11-30'),
+    slug: "data-is-the-new-capital"
+  }
+];
+---
+
+<Layout title="Home">
+  <section class="mb-24">
+    <AnimatedHeading />
+  </section>
+
+  <section class="max-w-3xl mx-auto">
+    <h2 class="font-mono text-xl mb-8 font-light tracking-tight flex items-center gap-2">
+      <KeyboardSymbol symbol="ctrl" />
+      <KeyboardSymbol symbol="shift" />
+      <span class="ml-2">Latest Articles</span>
+    </h2>
+    <div class="space-y-6">
+      {featuredPosts.map(post => (
+        <FeaturedPost {...post} />
+      ))}
+    </div>
+  </section>
+</Layout>

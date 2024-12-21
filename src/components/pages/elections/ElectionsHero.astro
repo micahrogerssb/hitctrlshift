@@ -1,0 +1,22 @@
+---
+import ArticleHeaderLogo from '../../ArticleHeaderLogo.astro';
+import FadeInScale from '../../animations/FadeInScale.astro';
+---
+
+<section>
+  <div class="max-w-7xl mx-auto px-4">
+    <FadeInScale delay={100} duration={1000}>
+      <div class="text-center mb-12">
+        <ArticleHeaderLogo />
+      </div>
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl sm:text-6xl font-sans font-black text-white/90 mb-6 tracking-tight">
+          US Elections Coverage
+        </h1>
+        <p class="text-xl text-white/60 font-serif leading-relaxed">
+          In-depth analysis and reporting on the political landscape shaping America's future.
+        </p>
+      </div>
+    </FadeInScale>
+  </div>
+</section>

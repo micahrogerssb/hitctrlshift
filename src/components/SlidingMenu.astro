@@ -1,0 +1,140 @@
+---
+import { navItems } from '../data/navigation';
+import { articles } from '../data/articles';
+import SearchResults from './SearchResults.astro';
+---
+
+<div 
+  id="sliding-menu" 
+  class="fixed inset-y-0 left-0 w-72 bg-black/40 backdrop-blur-xl transform -translate-x-full transition-transform duration-300 ease-in-out z-[150] border-r border-white/10 shadow-2xl"
+>
+  <div class="p-6">
+    <form 
+      id="search-form" 
+      class="relative mb-8"
+      action="/search"
+      method="get"
+    >
+      <input 
+        type="search" 
+        id="search-input"
+        name="q"
+        placeholder="Search articles..." 
+        autocomplete="off"
+        class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 font-sans font-black text-white/90 placeholder-white/50 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all duration-300"
+      />
+      <div 
+        id="search-preview" 
+        class="hidden absolute left-0 right-0 mt-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl max-h-[70vh] overflow-y-auto z-[200]"
+      >
+        <SearchResults articles={[]} searchTerm="" />
+      </div>
+    </form>
+    <nav>
+      <ul class="space-y-2">
+        {navItems.map(item => (
+          <li>
+            <a 
+              href={item.href}
+              class="block px-4 py-2.5 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all duration-300 group font-sans font-black"
+            >
+              <span class="relative">
+                {item.label}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<script>
+  import { searchArticles } from '../utils/search';
+  import { articles } from '../data/articles';
+
+  const menu = document.getElementById('sliding-menu');
+  const searchForm = document.getElementById('search-form');
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const searchPreview = document.getElementById('search-preview');
+  let isOpen = false;
+
+  function toggleMenu(open: boolean) {
+    isOpen = open;
+    menu?.classList.toggle('-translate-x-full', !isOpen);
+    if (isOpen) {
+      requestAnimationFrame(() => {
+        searchInput?.focus();
+      });
+    }
+  }
+
+  function updateSearchPreview(query: string) {
+    if (!query) {
+      searchPreview?.classList.add('hidden');
+      return;
+    }
+
+    const results = searchArticles(query, articles).slice(0, 3); // Show only top 3 results in preview
+    if (searchPreview && results.length > 0) {
+      const resultsHtml = results.map(article => `
+        <a 
+          href="/articles/${article.slug}"
+          class="block px-4 py-3 hover:bg-white/5 transition-colors duration-300"
+        >
+          <h3 class="font-sans font-black text-white/85 mb-1">${article.title}</h3>
+          <div class="flex justify-between items-center text-xs text-white/60">
+            <span>${article.author}</span>
+            <time datetime="${article.date.toISOString()}">
+              ${new Date(article.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </time>
+          </div>
+        </a>
+      `).join('') + `
+        <a 
+          href="/search?q=${encodeURIComponent(query)}"
+          class="block px-4 py-3 font-sans font-black text-primary hover:bg-white/5 transition-colors duration-300 text-center"
+        >
+          See all results →
+        </a>
+      `;
+      
+      searchPreview.innerHTML = resultsHtml;
+      searchPreview.classList.remove('hidden');
+    } else {
+      searchPreview?.classList.add('hidden');
+    }
+  }
+
+  searchInput?.addEventListener('input', (e) => {
+    updateSearchPreview((e.target as HTMLInputElement).value);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!searchForm?.contains(e.target as Node)) {
+      searchPreview?.classList.add('hidden');
+    }
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isOpen && e.clientX > 288 && !menu?.contains(e.target as Node)) {
+      toggleMenu(false);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      toggleMenu(false);
+    }
+  });
+
+  window.toggleSlidingMenu = toggleMenu;
+</script>
+
+<script>
+  declare global {
+    interface Window {
+      toggleSlidingMenu: (open: boolean) => void;
+    }
+  }
+</script>

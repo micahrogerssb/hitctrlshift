@@ -1,0 +1,23 @@
+---
+import BaseButton from './BaseButton.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<BaseButton 
+  href="/live"
+  variant="primary"
+  class={className}
+>
+  <span class="flex items-center gap-2">
+    <span class="relative flex h-2 w-2">
+      <span class="absolute inline-flex h-full w-full rounded-full bg-[#0a0a0a]/40 animate-ping"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-[#0a0a0a]/80"></span>
+    </span>
+    Radio
+  </span>
+</BaseButton>

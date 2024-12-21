@@ -1,0 +1,15 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { size = 'sm' } = Astro.props;
+
+const sizes = {
+  sm: 'h-8',
+  md: 'h-16',
+  lg: 'h-24'
+};
+---
+
+<div class:list={[sizes[size]]}></div>

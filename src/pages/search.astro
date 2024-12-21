@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { articles } from '../data/articles';
+import { searchArticles } from '../utils/search';
+import SearchInput from '../components/search/SearchInput.astro';
+import SearchResults from '../components/search/SearchResults.astro';
+import PageSpacer from '../components/ui/PageSpacer.astro';
+import ArticleHeaderLogo from '../components/ArticleHeaderLogo.astro';
+
+const query = Astro.url.searchParams.get('q') || '';
+const searchResults = query ? searchArticles(query, articles) : [];
+---
+
+<Layout title={`Search Results for "${query}"`}>
+  <PageSpacer />
+  <div class="max-w-3xl mx-auto px-4">
+    <ArticleHeaderLogo />
+    <div class="mb-8">
+      <SearchInput initialQuery={query} />
+    </div>
+    <h1 class="text-3xl font-mono font-bold mb-8 text-white/90">
+      {searchResults.length} results for "{query}"
+    </h1>
+    <SearchResults articles={searchResults} searchTerm={query} />
+  </div>
+</Layout>
+
+<script>
+  const form = document.querySelector('form');
+  const input = document.getElementById('search-input') as HTMLInputElement;
+
+  if (form && input) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = input.value.trim();
+      if (query) {
+        window.location.href = `/search?q=${encodeURIComponent(query)}`;
+      }
+    });
+  }
+</script>

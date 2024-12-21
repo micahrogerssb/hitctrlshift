@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GlowingBorder from '../components/ui/GlowingBorder.astro';
+import GridPattern from '../components/ui/GridPattern.astro';
+import PageSpacer from '../components/ui/PageSpacer.astro';
+import ArticleHeaderLogo from '../components/ArticleHeaderLogo.astro';
+---
+
+<Layout title="Comment Policy">
+  <PageSpacer />
+  <div class="max-w-3xl mx-auto">
+    <ArticleHeaderLogo />
+    <div class="relative bg-black/30 backdrop-blur-sm p-8 rounded-lg border border-purple-800/30">
+      <GlowingBorder />
+      <div class="absolute inset-0 rounded-lg overflow-hidden">
+        <GridPattern />
+      </div>
+      <div class="relative">
+        <h1 class="text-4xl font-sans font-black mb-8 text-white/90">CtrlShift Comment Policy</h1>
+        <div class="prose prose-invert">
+          <p class="text-lg leading-relaxed text-gray-300 mb-6">
+            At CtrlShift, we value open and respectful dialogue. Our comment section is a space for thoughtful discussions, diverse opinions, and meaningful exchanges. To maintain a welcoming and constructive environment, we ask all participants to adhere to the following guidelines:
+          </p>
+
+          <h2 class="text-xl font-sans font-black mt-8 mb-4">1. Be Respectful</h2>
+          <p>Treat others with respect, even when you disagree. Personal attacks, harassment, or abusive language will not be tolerated.</p>
+
+          <h2 class="text-xl font-sans font-black mt-8 mb-4">2. Stay On Topic</h2>
+          <p>Ensure your comments are relevant to the article or discussion at hand. Off-topic comments may be removed.</p>
+
+          <h2 class="text-xl font-sans font-black mt-8 mb-4">3. No Hate Speech or Discrimination</h2>
+          <p>Homophobia, racism, sexism, or any other forms of identity-based discrimination are expressly forbidden. Comments promoting hate, intolerance, or prejudice will be removed, and repeat offenders may be banned.</p>
+
+          <h2 class="text-xl font-sans font-black mt-8 mb-4">4. Avoid Spam and Self-Promotion</h2>
+          <p>Do not post spam, advertisements, or irrelevant links. Self-promotion or promotional content is not allowed unless explicitly approved by the moderation team.</p>
+
+          <h2 class="text-xl font-sans font-black mt-8 mb-4">5. Use Appropriate Language</h2>
+          <p>Profanity, obscene language, or graphic content is not acceptable. Keep the tone civil and appropriate for a public forum.</p>
+
+          <h2 class="text-xl font-sans font-black mt-8 mb-4">6. Respect Privacy</h2>
+          <p>Do not share personal information about yourself or others in the comment section.</p>
+
+          <h2 class="text-xl font-sans font-black mt-8 mb-4">7. Follow Moderation Decisions</h2>
+          <p>Our moderation team reserves the right to remove comments that violate these guidelines or are deemed inappropriate. Persistent violations may result in a ban from commenting.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

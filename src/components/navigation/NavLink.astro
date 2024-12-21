@@ -1,0 +1,19 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  isActive?: boolean;
+}
+
+const { href, label, isActive = false } = Astro.props;
+---
+
+<a 
+  href={href}
+  class:list={[
+    "px-3 py-2 text-sm font-sans font-semibold tracking-wide uppercase transition-colors duration-300",
+    isActive ? "text-secondary" : "text-white/70 hover:text-primary"
+  ]}
+>
+  {label}
+</a>

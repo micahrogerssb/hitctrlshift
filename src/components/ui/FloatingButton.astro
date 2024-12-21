@@ -1,0 +1,57 @@
+---
+interface Props {
+  href: string;
+  text: string;
+}
+
+const { href, text } = Astro.props;
+---
+
+<a 
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="fixed bottom-8 right-8 z-50 group opacity-0 pointer-events-none transition-opacity duration-300"
+  id="floating-donate-button"
+>
+  <div class="relative">
+    <div class="absolute inset-0 bg-gradient-to-r from-punk-red/20 to-purple-600/20 rounded blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+    <button class="relative px-6 py-3 bg-black/50 backdrop-blur-sm border border-punk-red/50 rounded font-mono text-sm text-white/90 transition-all duration-300 group-hover:border-punk-red group-hover:text-white group-hover:-translate-y-0.5">
+      <div class="absolute top-0 left-0 w-2 h-px bg-punk-red/50 group-hover:w-full transition-all duration-500"></div>
+      <div class="absolute bottom-0 right-0 w-2 h-px bg-punk-red/50 group-hover:w-full transition-all duration-500"></div>
+      <div class="relative flex items-center gap-2">
+        <div class="w-1.5 h-1.5 bg-punk-red/50 rounded-full animate-pulse"></div>
+        {text}
+      </div>
+    </button>
+  </div>
+</a>
+
+<script>
+const floatingButton = document.getElementById('floating-donate-button');
+const headerButton = document.getElementById('header-donate-button');
+const header = document.getElementById('site-header');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (floatingButton) {
+      if (!entry.isIntersecting || header?.classList.contains('-translate-y-full')) {
+        floatingButton.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        floatingButton.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+  });
+}, { threshold: 0.1 });
+
+if (headerButton) {
+  observer.observe(headerButton);
+}
+
+// Show floating button when header is hidden
+window.addEventListener('scroll', () => {
+  if (floatingButton && header?.classList.contains('-translate-y-full')) {
+    floatingButton.classList.remove('opacity-0', 'pointer-events-none');
+  }
+});
+</script>

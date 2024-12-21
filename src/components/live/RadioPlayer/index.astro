@@ -1,0 +1,17 @@
+---
+import PlayButton from './PlayButton.astro';
+import VolumeControl from './VolumeControl.astro';
+---
+
+<div class="relative bg-black/30 backdrop-blur-sm p-8 rounded-lg border border-white/10">
+  <div class="flex flex-col items-center gap-8">
+    <div class="text-center">
+      <h2 class="font-sans font-black text-xl text-white/90 mb-2">CtrlShift Radio</h2>
+      <p class="text-sm text-white/60 font-mono">Streaming news and commentary</p>
+    </div>
+
+    <PlayButton />
+    
+    <VolumeControl />
+  </div>
+</div>

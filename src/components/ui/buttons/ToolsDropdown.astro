@@ -1,0 +1,21 @@
+---
+import { toolsLinks } from '../../../data/tools';
+import DropdownItem from '../dropdown/DropdownItem.astro';
+---
+
+<div
+  id="tools-dropdown"
+  class="absolute right-0 mt-2 w-64 rounded-lg bg-black/90 backdrop-blur-xl border border-white/10 shadow-2xl transform scale-95 opacity-0 pointer-events-none transition-all duration-300 z-[200]"
+  style="top: 2.5rem;"
+>
+  <div class="p-2">
+    {toolsLinks.map(tool => (
+      <DropdownItem
+        href={tool.href}
+        icon={tool.icon}
+        title={tool.name}
+        description={tool.description}
+      />
+    ))}
+  </div>
+</div>

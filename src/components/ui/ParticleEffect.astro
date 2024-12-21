@@ -1,0 +1,52 @@
+---
+---
+<div class="particle-container">
+  {Array.from({ length: 50 }).map(() => (
+    <div class="particle"></div>
+  ))}
+</div>
+
+<style>
+  .particle-container {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #ffffff05;
+    border-radius: 50%;
+    animation: float-particle 20s linear infinite;
+  }
+
+  @keyframes float-particle {
+    0% {
+      transform: translateY(100vh) translateX(0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-100px) translateX(100px);
+      opacity: 0;
+    }
+  }
+
+  .particle:nth-child(3n) {
+    width: 1px;
+    height: 1px;
+    animation-duration: 25s;
+    animation-delay: -5s;
+  }
+
+  .particle:nth-child(4n) {
+    background: #ff2e4c08;
+    animation-duration: 15s;
+    animation-delay: -2s;
+  }
+</style>

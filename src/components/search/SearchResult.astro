@@ -1,0 +1,48 @@
+---
+import type { Article } from '../../types';
+import { format } from 'date-fns';
+
+interface Props {
+  article: Article;
+  searchTerm?: string;
+}
+
+const { article, searchTerm } = Astro.props;
+---
+
+<a 
+  href={`/articles/${article.slug}`}
+  class="group block"
+>
+  <div class="relative rounded-xl overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+    
+    <div class="relative p-4 sm:p-6">
+      <div class="flex items-start gap-4">
+        {article.imageUrl && (
+          <div class="hidden sm:block w-24 h-24 flex-shrink-0">
+            <img 
+              src={article.imageUrl} 
+              alt=""
+              class="w-full h-full object-cover rounded-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
+        )}
+        
+        <div class="flex-1 min-w-0">
+          <h3 class="font-sans font-black text-lg text-white/90 mb-2 group-hover:text-primary transition-colors duration-300 truncate">
+            {article.title}
+          </h3>
+          
+          <div class="flex items-center gap-3 text-sm">
+            <span class="text-white/60 font-medium">{article.author}</span>
+            <span class="text-white/30">•</span>
+            <time datetime={article.date.toISOString()} class="font-mono text-white/60">
+              {format(article.date, 'MMM d, yyyy')}
+            </time>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

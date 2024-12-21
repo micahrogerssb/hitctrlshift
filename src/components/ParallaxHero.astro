@@ -1,0 +1,77 @@
+---
+interface Props {
+  imageUrl: string;
+  alt: string;
+}
+
+const { imageUrl, alt } = Astro.props;
+---
+
+<div class="parallax-container">
+  <div class="parallax-image group">
+    <img 
+      src={imageUrl} 
+      alt={alt} 
+      class="w-[90%] h-auto rounded-lg mx-auto transition-transform duration-500 ease-spring group-hover:scale-105"
+      loading="eager"
+    />
+  </div>
+</div>
+
+<script>
+  class ParallaxEffect {
+    private element: Element | null;
+    private enabled: boolean;
+
+    constructor() {
+      this.element = document.querySelector('.parallax-image');
+      this.enabled = this.shouldEnableParallax();
+      
+      if (this.enabled) {
+        this.init();
+      }
+    }
+
+    private shouldEnableParallax(): boolean {
+      return window.matchMedia('(prefers-reduced-motion: no-preference)').matches && 
+             window.innerWidth >= 768;
+    }
+
+    private init() {
+      window.addEventListener('scroll', this.handleParallax.bind(this), { passive: true });
+    }
+
+    private handleParallax() {
+      if (!this.element || !this.enabled) return;
+      
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * 0.3;
+      
+      requestAnimationFrame(() => {
+        this.element!.style.transform = `translateY(${rate}px)`;
+      });
+    }
+  }
+
+  // Initialize parallax effect
+  new ParallaxEffect();
+</script>
+
+<style>
+  .parallax-container {
+    position: relative;
+    max-width: 42rem;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .parallax-image {
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .parallax-image {
+      transform: none !important;
+    }
+  }
+</style>

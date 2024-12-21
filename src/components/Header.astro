@@ -1,0 +1,23 @@
+---
+import HeaderNav from './navigation/HeaderNav.astro';
+
+interface Props {
+  isHomePage?: boolean;
+}
+
+const { isHomePage = false } = Astro.props;
+---
+
+<div class="sticky top-0 z-50 border-b border-white/10">
+  <div class="absolute inset-0 backdrop-blur-xl bg-gradient-to-b from-black/80 via-black/60 to-transparent">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 opacity-50"></div>
+  </div>
+  <HeaderNav showToolsOnMobile={false} />
+</div>
+
+<style>
+  .sticky {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+</style>

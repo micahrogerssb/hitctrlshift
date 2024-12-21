@@ -1,0 +1,38 @@
+---
+import MobileNav from './MobileNav.astro';
+import DesktopNav from './DesktopNav.astro';
+import ToolsButton from '../ui/buttons/ToolsButton.astro';
+import SearchButton from './SearchButton.astro';
+
+interface Props {
+  showToolsOnMobile?: boolean;
+}
+
+const { showToolsOnMobile = false } = Astro.props;
+---
+
+<nav class="container mx-auto px-4 relative">
+  <div class="h-14 flex items-center justify-between">
+    <div class="flex items-center gap-8">
+      <SearchButton />
+      <MobileNav />
+      <DesktopNav />
+    </div>
+
+    <div class="flex items-center gap-4">
+      {showToolsOnMobile ? (
+        <ToolsButton />
+      ) : (
+        <ToolsButton class="hidden sm:inline-flex" />
+      )}
+      <a 
+        href="https://gofund.me/7787c0df"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden sm:inline-flex items-center px-3 py-1.5 text-sm font-sans font-semibold tracking-wide uppercase text-white/90 hover:text-white transition-colors duration-300"
+      >
+        Support Us
+      </a>
+    </div>
+  </div>
+</nav>

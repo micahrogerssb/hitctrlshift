@@ -1,0 +1,58 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div class:list={[
+  "flex flex-col items-center",
+  className
+]}>
+  <div class="flex flex-row justify-center items-center gap-6">
+    <slot name="main" />
+  </div>
+  
+  <div class="my-8 w-24 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+  
+  {/* Smartphone container with external label */}
+  <div class="relative">
+    {/* External rotated label */}
+    <span class="absolute -left-28 top-1/2 -translate-y-1/2 font-mono font-black text-base tracking-wide text-white/60 whitespace-nowrap origin-center -rotate-90">
+      Follow Our Socials
+    </span>
+
+    {/* Phone body */}
+    <div class="bg-black/20 backdrop-blur-sm rounded-3xl border border-white/10 p-4">
+      {/* Notch */}
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-5 bg-black rounded-b-xl"></div>
+      
+      {/* Screen content */}
+      <div class="flex flex-col gap-4 pt-6">
+        <div class="flex flex-row justify-center items-center gap-4">
+          <slot name="social-row-1" />
+        </div>
+        <div class="flex flex-row justify-center items-center gap-4">
+          <slot name="social-row-2" />
+        </div>
+        {/* Empty rows */}
+        <div class="h-8"></div>
+        <div class="h-8"></div>
+        <div class="h-8"></div>
+      </div>
+      
+      {/* Home button */}
+      <div class="mt-4 flex justify-center">
+        <div class="w-8 h-1 bg-white/20 rounded-full"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .flex {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+</style>

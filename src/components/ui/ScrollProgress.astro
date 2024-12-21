@@ -1,0 +1,25 @@
+---
+---
+<div class="fixed top-0 left-0 w-full h-px z-50">
+  <div class="scroll-progress"></div>
+</div>
+
+<script>
+  const progress = document.querySelector('.scroll-progress');
+  
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    progress.style.width = scrolled + '%';
+  });
+</script>
+
+<style>
+  .scroll-progress {
+    height: 1px;
+    background: linear-gradient(to right, #ff2e4c50, #ff2e4c);
+    width: 0%;
+    transition: width 50ms ease-out;
+  }
+</style>

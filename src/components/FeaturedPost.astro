@@ -1,0 +1,48 @@
+---
+import GlowingBorder from './ui/GlowingBorder.astro';
+
+interface Props {
+  title: string;
+  excerpt: string;
+  author: string;
+  date: Date;
+  slug: string;
+  imageUrl?: string;
+  content?: string;
+}
+
+const { title, excerpt, author, date, slug, imageUrl, content } = Astro.props;
+
+// Get first few words of content
+function getPreview(text: string) {
+  const plainText = text?.replace(/<[^>]*>/g, '') || excerpt;
+  const words = plainText.split(' ').slice(0, 15);
+  return words.join(' ') + '...';
+}
+---
+
+<article class="group relative bg-black/20 backdrop-blur-sm p-6 transition-all duration-500">
+  <a href={`/articles/${slug}`} class="relative block group/link">
+    <div class="flex flex-col md:flex-row gap-6">
+      <div class="flex-1">
+        <h2 class="text-xl font-sans font-black tracking-tight text-white/90 group-hover/link:text-primary transition-colors duration-300 mb-4">{title}</h2>
+        <p class="text-gray-400 mb-6 font-light font-serif">{getPreview(content || '')}</p>
+        <div class="flex justify-between items-center">
+          <span class="font-sans text-sm font-medium uppercase tracking-wide text-white/70">{author}</span>
+          <time datetime={date.toISOString()} class="font-mono text-sm text-gray-500">
+            {date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+          </time>
+        </div>
+      </div>
+      {imageUrl && (
+        <div class="w-full md:w-72 h-48 md:h-full flex-shrink-0 mt-4 md:mt-0">
+          <img 
+            src={imageUrl} 
+            alt={title}
+            class="w-full h-full object-cover rounded-lg opacity-80 group-hover/link:opacity-100 transition-opacity duration-300"
+          />
+        </div>
+      )}
+    </div>
+  </a>
+</article>

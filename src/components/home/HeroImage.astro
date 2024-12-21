@@ -1,0 +1,20 @@
+---
+import OptimizedImage from '../OptimizedImage.astro';
+
+const { imageProps, containerClass } = {
+  imageProps: {
+    src: "https://i.imgur.com/Gyut75s.png",
+    alt: "CTRL SHIFT Logo",
+    class: "w-full h-auto mx-auto transition-transform duration-500 ease-spring group-hover:scale-105",
+  },
+  containerClass: "max-w-[32rem] mx-auto"
+};
+---
+
+<div class:list={["group", containerClass]}>
+  <OptimizedImage 
+    {...imageProps}
+    eager={true}
+    class={imageProps.class}
+  />
+</div>

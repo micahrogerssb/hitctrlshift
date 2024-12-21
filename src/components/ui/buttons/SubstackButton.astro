@@ -1,0 +1,24 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<a 
+  href="https://substack.com/@hitctrlshift"
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[
+    "w-10 h-10 flex items-center justify-center",
+    "bg-[#FF6719] hover:bg-[#FF6719]/90",
+    "rounded-lg border border-[#FF6719]",
+    "transition-all duration-300 hover:-translate-y-0.5",
+    className
+  ]}
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+    <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
+  </svg>
+</a>
